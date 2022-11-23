@@ -1,16 +1,20 @@
-from smtpd import Options
-
 import pytest
-from selene import browser
+from selene.support.shared import browser
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 @pytest.fixture()
-def open_chome():
-    browser.open_url('http://google.com/ncr')
+def set_webdriver():
+    browser.config.driver = webdriver.Chrome(ChromeDriverManager().install())
+    return browser.config.driver
 
 
-@pytest.fixture(open_chome)
-def browser_size():
-    options = Options()
-    options.add_argument('--window-size=1900,1000')
-    return options
+@pytest.fixture()
+def set_browser_size():
+    browser.config.driver.maximize_window()
+
+
+@pytest.fixture()
+def open_browser(set_webdriver, set_browser_size):
+    browser.open('https://google.com/ncr')
