@@ -9,5 +9,4 @@ def test_google_search(open_browser):
 
 def test_google_search_bad(open_browser):
     browser.element('[name=q]').type('hvkhgvbkubujgbhiljhbililhoiljh').press_enter()
-    browser.element('[id=search]').should(have.text(
-        "Your search - hvkhgvbkubujgbhiljhbililhoiljh - did not match any documents."))
+    browser.element('[id=result-stats]').should(have.text("About 0 results"))
